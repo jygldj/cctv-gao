@@ -1,0 +1,26 @@
+*.apk
+*.aab
+*.iml
+
+# 密钥库与签名配置（敏感信息，绝不入库）
+*.jks
+*.keystore
+keystore.properties
+key.properties
+
+# 本机环境
+local.properties
+
+# IDE（Android Studio 配置随机器变化，整体忽略）
+.idea/
+
+# 构建产物
+build/
+.gradle/
+.cxx
+.externalNativeBuild
+captures/
+*.hprof
+
+# 杂项
+.DS_Store
