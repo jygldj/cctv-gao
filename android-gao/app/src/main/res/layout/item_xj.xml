@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="itemPresenter"
+            type="com.daoxuan.cctv.BaseWebViewActivity.XjBindPresenter" />
+
+        <variable
+            name="item"
+            type="com.daoxuan.cctv.domain.XjItem" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/xjItem"
+            android:textSize="@dimen/fontDefault"
+            android:textColor="#FFFFFF"
+            android:tag="xjItem"
+            android:text="@{item.title+@string/kong+item.remark}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_button_background"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="4dp"
+            android:onClick="@{() -> itemPresenter.onClick(item)}" />
+    </LinearLayout>
+</layout>

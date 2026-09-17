@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火锅+道玄</title>
+    <style>
+        :root {
+            --text: #fff8f0;
+            --bg: #1a0f0b;
+            --accent1: #ff6600;
+            --accent2: #ffcc00;
+            --panel: rgba(255,204,0,0.1);
+        }
+        
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: var(--text);
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 18px;
+        }
+    /* 玄光特效 */
+    .dao-aura {
+        position: fixed;
+        width: 200vw;
+        height: 200vh;
+        top: -50vh;
+        left: -50vw;
+        background: radial-gradient(circle, rgba(0,204,153,0.05) 0%, transparent 70%);
+        animation: aura-pulse 12s infinite alternate;
+        z-index: -1;
+    }
+    
+    @keyframes aura-pulse {
+        0% { transform: scale(0.8); opacity: 0.1; }
+        100% { transform: scale(1.2); opacity: 0.3; }
+    }
+    
+    /* 道经符文 */
+    .dao-symbol {
+        position: absolute;
+        font-family: "SimSun", serif;
+        font-size: 1.8rem;
+        color: rgba(0,204,153,0.7);
+        animation: symbol-float 20s linear infinite;
+    }
+    
+    @keyframes symbol-float {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.5; }
+        90% { opacity: 0.5; }
+        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }        
+        /* 太极容器 */
+        .taiji-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+        }
+        
+        /* 太极图 */
+        .taiji {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 90px;
+            left: 90px;
+            background: radial-gradient(circle at 50% 25%, #fff 25%, #000 25% 75%, #fff 75%);
+            border-radius: 50%;
+            animation: spin 8s infinite linear;
+            box-shadow: 0 0 25px var(--accent1);
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .taiji::before, .taiji::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .taiji::before {
+            top: 25%;
+            background: #000;
+            box-shadow: 0 0 10px #fff;
+        }
+        
+        .taiji::after {
+            bottom: 25%;
+            background: #fff;
+            box-shadow: 0 0 10px #000;
+        }
+        
+        /* 等距环绕文字 */
+        .arc-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            animation: spin-reverse 16s infinite linear;
+        }
+        
+        .arc-text span {
+            position: absolute;
+            display: block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--accent1);
+            text-shadow: 0 0 10px rgba(255,102,0,0.8);
+            /* 位置通过JS动态计算 */
+        }
+        
+        @keyframes spin-reverse {
+            100% { transform: rotate(-360deg); }
+        }
+        
+        /* 火锅悟道 */
+        .info-text {
+    max-width: 500px; /* 保持最大宽度不变 */
+    margin: 10px auto; /* 减小外边距，使整体更紧凑 */
+    padding: 0 10px; /* 减小内边距，进一步压缩空间 */
+    font-size: 0.9rem; /* 缩小字体大小 */
+    line-height: 1.4; /* 缩小行间距 */
+    position: relative;
+    z-index: 1;
+        }
+        
+        /* 按钮行容器：两按钮强制同一行、左右平行、居中 */
+        .btn-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin: 30px auto;
+            flex-wrap: nowrap;
+        }
+        
+        #donate-btn, .donate-btn {
+            background: linear-gradient(160deg, var(--accent1), var(--accent2));
+            color: #222 !important;
+            border: none;
+            outline: none;
+            padding: 10px 20px /* 减少内边距 */
+            font-size: 1rem; /* 减小字体大小 */
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+            /* 同大小：固定最小宽度，确保两按钮尺寸一致 */
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        #donate-btn:hover, .donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,102,0,0.6);
+        }
+        
+        /* 遥控器焦点态 */
+        /* 「去随喜吧」保留金边外框作为焦点提示 */
+        .donate-btn.tv-focus {
+            outline: 4px solid var(--accent2);
+            outline-offset: 3px;
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 8px 24px rgba(255,204,0,0.8);
+        }
+        /* 「再辣点儿哈」取消外边框：仅以放大+阴影提示焦点 */
+        #donate-btn.tv-focus {
+            outline: none;
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 8px 24px rgba(255,204,0,0.8);
+        }
+        
+
+        .cq-egg {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.9rem;
+            color: var(--accent1);
+            writing-mode: vertical-rl;
+        }
+        
+        /* 火锅特效 */
+        .hotpot-effect {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            background: radial-gradient(circle, transparent 60%, rgba(255,102,0,0.1) 100%);
+            animation: hotpot-bubble 8s infinite linear;
+        }
+        
+        @keyframes hotpot-bubble {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+        
+        .chili-pepper {
+            position: fixed;
+            font-size: 1.5rem;
+            animation: float 15s infinite linear;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.1; }
+            50% { opacity: 0.9; }
+            100% { transform: translate(100vw, -100vh) rotate(360deg); opacity: 0.1; }
+        }
+    </style>
+</head>
+<body>
+<div class="dao-aura"></div>
+    <div class="taiji-container">
+        <div class="taiji"></div>
+        <div class="arc-text">
+            <span>来</span>
+            <span>者</span>
+            <span>有</span>
+            <span>心</span>
+            <span>去</span>
+            <span>者</span>
+            <span>有</span>
+            <span>意</span>
+        </div>
+    </div>     
+    <div class="info-text">
+        <p>火锅悟道</p>
+        <p>山城夜色映洪崖，辣海椒山蕴妙华。</p>
+        <p>来者有心皆是缘，去者有意禅自圆。</p>
+        <p>麻辣交融参世相，太极火锅品浮生。</p>
+    </div>
+    
+    <div class="btn-row">
+        <button id="donate-btn">再辣点儿哈！</button>
+        <button class="donate-btn" onclick="location.href='img/dsm.html'">去随喜吧</button>
+    </div>
+    
+    <div class="cq-egg">勒是雾都道玄</div>
+    <div class="hotpot-effect"></div>
+    
+    <script>
+        // 等距定位计算（间距40px）
+        function positionCharacters() {
+            const taiji = document.querySelector('.taiji'); 
+            const chars = document.querySelectorAll('.arc-text  span');
+            const centerX = taiji.offsetLeft  + 60;
+            const centerY = taiji.offsetTop  + 60;
+            const margin = 40; // 黄金间距 
+            
+            // 145°紧凑分布 
+            const angles = [17.5, 35, 52.5, 70, 107.5, 125, 142.5, 160];
+            
+            chars.forEach((char,  i) => {
+                const angle = angles[i] * Math.PI / 180;
+                const x = centerX + (60 + margin) * Math.cos(angle)  - 15;
+                const y = centerY + (60 + margin) * Math.sin(angle)  - 15;
+                
+                char.style.left  = `${x}px`;
+                char.style.top  = `${y}px`;
+            });
+        }
+    // 生成道经符文 
+    const daoTexts = ["道", "德", "无", "为", "清", "静", "自", "然"];
+    function createDaoSymbol() {
+        const symbol = document.createElement("div"); 
+        symbol.className  = "dao-symbol";
+        symbol.textContent  = daoTexts[Math.floor(Math.random() * 8)];
+        symbol.style.left  = `${Math.random()  * 100}vw`;
+        symbol.style.fontSize  = `${Math.random()  * 1.5 + 1}rem`;
+        symbol.style.animationDuration  = `${Math.random()  * 20 + 10}s`;
+        document.body.appendChild(symbol); 
+        
+        setTimeout(() => symbol.remove(),  parseFloat(symbol.style.animationDuration)  * 1000);
+    }
+    
+    // 初始化生成符文 
+    for(let i=0; i<5; i++) createDaoSymbol();
+    setInterval(createDaoSymbol, 5000); 
+        // 创建辣椒 
+        function createChiliPepper() {
+            const chili = document.createElement("div"); 
+            chili.className  = "chili-pepper";
+            chili.innerHTML  = "🌶️";
+            chili.style.left  = `${Math.random()  * 100}vw`;
+            chili.style.top  = `${Math.random()  * 100}vh`;
+            chili.style.animationDuration  = `${Math.random()  * 15 + 5}s`;
+            document.body.appendChild(chili); 
+            
+            setTimeout(() => chili.remove(),  parseFloat(chili.style.animationDuration)  * 1000);
+        }
+ 
+        // 初始化 
+        positionCharacters();
+        window.addEventListener('resize',  positionCharacters);
+        
+        // 生成辣椒 
+        for(let i=0; i<5; i++) createChiliPepper();
+        setInterval(createChiliPepper, 3000);
+ 
+        // 「再辣点儿哈」辣椒特效：随点击次数累加，游动辣椒越来越多
+        let spiceCount = 0;
+        function spiceUp() {
+            spiceCount++;
+            // 点击反馈：按钮短暂变红再复原
+            const btn = document.getElementById('donate-btn');
+            if (btn) {
+                btn.style.background = "linear-gradient(160deg, #ff7733, #ffdd00)";
+                setTimeout(() => {
+                    btn.style.background = "linear-gradient(160deg, var(--accent1), var(--accent2))";
+                }, 400);
+            }
+            // 每点一次多撒一批（点击次数越多，单次撒出越多）
+            const burst = 3 + spiceCount;
+            for (let i = 0; i < burst; i++) {
+                setTimeout(createChiliPepper, i * 200);
+            }
+        }
+
+        // 按钮特效（鼠标点击）
+        document.getElementById('donate-btn').addEventListener('click',  function(e) {
+            e.preventDefault(); 
+            spiceUp();
+        });
+
+        // ===== 遥控器支持（原生，无 jQuery 依赖）=====
+        (function(){
+            const KEY_UP=87, KEY_DOWN=83, KEY_LEFT=65, KEY_RIGHT=68, KEY_OK=13, KEY_BACK=8, KEY_BACK_IPANNEL=4, KEY_MENU=82;
+            const btns = Array.from(document.querySelectorAll('#donate-btn, .donate-btn'));
+            let focusIdx = 0;
+            function setFocus(i){
+                btns.forEach(b=>b.classList.remove('tv-focus'));
+                if(btns[i]){ focusIdx=i; btns[i].classList.add('tv-focus'); }
+            }
+            if(btns.length>0){ setFocus(0); }
+
+            document.addEventListener('keydown', function(e){
+                const code = e.keyCode;
+                switch(code){
+                    case KEY_UP:
+                    case KEY_DOWN:
+                    case KEY_LEFT:
+                    case KEY_RIGHT:
+                        // 两按钮纵向排列，左右/上下均在同一组按钮间循环移动焦点
+                        if(btns.length>1){
+                            let next = (focusIdx + (code===KEY_DOWN||code===KEY_RIGHT ? 1 : btns.length-1)) % btns.length;
+                            setFocus(next);
+                        }
+                        e.preventDefault();
+                        break;
+                    case KEY_OK:
+                        if(btns[focusIdx]){ e.preventDefault(); btns[focusIdx].click(); }
+                        break;
+                    case KEY_BACK:
+                    case KEY_BACK_IPANNEL:
+                        e.preventDefault();
+                        window.location.href = 'index.html';
+                        break;
+                    case KEY_MENU:
+                        e.preventDefault();
+                        window.location.href = 'index.html';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

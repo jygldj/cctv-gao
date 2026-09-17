@@ -1,0 +1,20 @@
+res:
+  url: http://qn.vonchange.com/utao/res/tv-web.zip
+  skipFirst: true
+  version: 62
+  update: true
+apk:
+  version: 31
+  url: http://qn.vonchange.com/utao/release/utao-20250316.apk
+  force: false
+  desc: 修复部分闪退问题 UI优化
+x5Url:
+  64:
+    - https://tbsall.imtt.qq.com/mtt/release/component/tbs_core_046285_20240613152541_nolog_fs_obfs_arm64-v8a_release.tbs
+  32:
+    - https://tbs.imtt.qq.com/others/release/x5/tbs_core_046238_20230210164344_nolog_fs_obfs_armeabi_release.tbs
+    - http://qn.vonchange.com/utao/x5/045738_20210925205342.tbs
+data:
+  - code: video
+    url: video.json
+    v: 2024/11/19/001

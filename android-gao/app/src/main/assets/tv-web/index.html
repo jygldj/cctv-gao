@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:@vue>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道玄电视</title>
+    <link href="css/my.css?v=x" rel="stylesheet">
+    <style>
+      #tv-index-content .tv-item { margin: 14.4vh 0.8vw; }
+      #tv-index-content .tv-item span { line-height: 1.9; margin-top: 1vh; }
+      #tv-index-content .tv-item img { width: 10.24vw; height: 10.24vw; }
+
+      @media screen and (min-width: 600px) and (max-width: 950px) {
+          /* 把顶部图标往上推一点，给下方黄历留足空间 */
+          #tv-index-content .tv-item { margin: 3.6vh 0.4vw; } 
+          #tv-index-content .tv-item span { line-height: 1.4; margin-top: 0.5vh; font-size: 0.8rem; }
+          #tv-index-content .tv-item img { width: 7vw; height: 7vw; } 
+      }
+    </style>
+    <script src="js/zepto.min.js?v=x"></script>
+    <script>window._tvIsApp=true;</script>
+    <script src="js/base.js?v=x"></script>
+    <script src="js/common.js?v=x"></script>
+    <script src="js/lunar.js?v=x"></script>
+    <script src="js/zhufu.js?v=x"></script>
+    <script src="js/vuex.min.js?v=x"></script>
+    <script src="js/focus-home.js?v=x"></script>
+    <script charset="UTF-8" src="js/index.js?v=x"></script>
+</head>
+
+<body>
+    <div class="tv-body">
+        <div class="tv-body" style="height: 100%" id="tv-body" @vue:mounted="initData()">
+            <div id="tv-content">
+                <div id="tv-index-content" class="tv-content" style="display:grid">
+                    <div v-for="item in apps" @click="appChoose(item)" :id="tvId(item.id,'app-')" class="tv-item" move-updown="5">
+                        <img :src="item.pic" :alt="item.name" /><span>{{item.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

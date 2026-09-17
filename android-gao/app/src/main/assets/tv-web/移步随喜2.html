@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>来者有心 去者有意</title>
+    <style>
+        :root {
+            --text: #e8e8e8;
+            --bg: #1a1a2a;
+            --accent1: #ffaa00;
+            --accent2: #00cc99;
+            --panel: rgba(200,200,200,0.15);
+        }
+        
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: var(--text);
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 18px;
+        }
+        /* 太极容器 */
+        .taiji-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 20px auto;
+        }
+        
+        /* 太极图 */
+        .taiji {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 80px;
+            left: 80px;
+            background: radial-gradient(circle at 50% 25%, #fff 25%, #000 25% 75%, #fff 75%);
+            border-radius: 50%;
+            animation: spin 8s infinite linear;
+            box-shadow: 0 0 20px var(--accent1);
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .taiji::before, .taiji::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .taiji::before {
+            top: 25%;
+            background: #000;
+            box-shadow: 0 0 10px #fff;
+        }
+        
+        .taiji::after {
+            bottom: 25%;
+            background: #fff;
+            box-shadow: 0 0 10px #000;
+        }
+        
+        /* 等距环绕文字 */
+        .arc-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            animation: spin-reverse 16s infinite linear;
+        }
+        
+        .arc-text span {
+            position: absolute;
+            display: block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent1);
+            text-shadow: 0 0 8px rgba(255,170,0,0.7);
+            /* 位置通过JS动态计算 */
+        }
+        
+        @keyframes spin-reverse {
+            100% { transform: rotate(-360deg); }
+        }
+        
+        /* 火锅悟道 */
+        .info-text {
+    max-width: 500px; /* 保持最大宽度不变 */
+    margin: 10px auto; /* 减小外边距，使整体更紧凑 */
+    padding: 0 10px; /* 减小内边距，进一步压缩空间 */
+    font-size: 0.9rem; /* 缩小字体大小 */
+    line-height: 1.4; /* 缩小行间距 */
+    position: relative;
+    z-index: 1;
+        }
+        
+        #donate-btn {
+            background: linear-gradient(160deg, var(--accent1), var(--accent2));
+            color: #222 !important;
+            border: none;
+            padding: 10px 20px /* 减少内边距 */
+            font-size: 1rem; /* 减小字体大小 */
+            border-radius: 50px;
+            margin: 30px auto;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        #donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,170,0,0.5);
+        }
+        
+        .cq-egg {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.9rem;
+            color: var(--accent1);
+            writing-mode: vertical-rl;
+        }
+        
+        .gua-float {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.2;
+            animation: float 15s infinite linear;
+            z-index: 1;
+            text-shadow: 0 0 5px gold;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.1; }
+            50% { opacity: 0.3; text-shadow: 0 0 10px orange; }
+            100% { transform: translate(100vw, -100vh) rotate(360deg); opacity: 0.1; }
+        }
+        
+        .rose {
+            position: absolute;
+            font-size: 2rem;
+            animation: float-up 1.5s ease-out forwards;
+            z-index: 10;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+        
+        .bless-text {
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 10;
+            animation: text-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        .bless-text.left  {
+            left: 20%;
+            background: linear-gradient(45deg, #3399ff, #9966ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .bless-text.right  {
+            right: 20%;
+            background: linear-gradient(45deg, #ff3366, #ffcc00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        @keyframes text-pop {
+            0% { transform: translateY(20px) scale(0.5); opacity: 0; }
+            80% { transform: translateY(-5px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="taiji-container">
+        <div class="taiji"></div>
+        <div class="arc-text">
+            <span>来</span>
+            <span>者</span>
+            <span>有</span>
+            <span>心</span>
+            <span>去</span>
+            <span>者</span>
+            <span>有</span>
+            <span>意</span>
+        </div>
+    </div>
+    
+    <div class="info-text">
+        <p>观影之余</p>
+        <p>光影流转刹那间，心栖片刻亦安然。</p>
+        <p>清风明月皆无价，片语拈花尽是缘。</p>
+        <p>不留码迹尘心净，归去福田自盎然。</p>
+        <p>若怀慈心施随喜，菩萨广行福满天。</p>
+    </div>
+    
+    <button id="donate-btn">支持我</button>
+    
+    <div class="cq-egg">勒是雾都玄学通道</div>
+    
+    <script>
+        // 等距定位计算 
+        function positionCharacters() {
+            const taiji = document.querySelector('.taiji'); 
+            const chars = document.querySelectorAll('.arc-text  span');
+            const centerX = taiji.offsetLeft  + 60;
+            const centerY = taiji.offsetTop  + 60;
+            const margin = 40; // 文字与太极边缘间距 
+            
+            // 黄金角度分布（160°范围）
+            const angles = [20, 40, 60, 80, 100, 120, 140, 160];
+            
+            chars.forEach((char,  i) => {
+                const angle = angles[i] * Math.PI / 180;
+                const x = centerX + (60 + margin) * Math.cos(angle)  - 15;
+                const y = centerY + (60 + margin) * Math.sin(angle)  - 15;
+                
+                char.style.left  = `${x}px`;
+                char.style.top  = `${y}px`;
+            });
+        }
+ 
+        // 初始化定位 
+        positionCharacters();
+        window.addEventListener('resize',  positionCharacters);
+ 
+        // 八卦漂浮特效 
+        const guaList = ["䷀","䷁","䷂","䷃","䷄","䷅","䷆","䷇","䷈","䷉","䷊","䷋","䷌","䷍","䷎","䷏","䷐","䷑","䷒","䷓","䷔","䷕","䷖","䷗","䷘","䷙","䷚","䷛","䷜","䷝","䷞","䷟","䷠","䷡","䷢","䷣","䷤","䷥","䷦","䷧","䷨","䷩","䷪","䷫","䷬","䷭","䷮","䷯","䷰","䷱","䷲","䷳","䷴","䷵","䷶","䷷","䷸","䷹","䷺","䷻","䷼","䷽","䷾","䷿"];
+        
+        function createFloatingGua() {
+            const gua = document.createElement("div"); 
+            gua.className  = "gua-float";
+            gua.textContent  = guaList[Math.floor(Math.random()*64)];
+            gua.style.left  = Math.random()*100  + 'vw';
+            gua.style.top  = Math.random()*100  + 'vh';
+            gua.style.animationDuration  = 10 + Math.random()*20  + 's';
+            document.body.appendChild(gua); 
+            
+            setTimeout(() => gua.remove(),  parseFloat(gua.style.animationDuration)*1000); 
+        }
+ 
+        for(let i=0; i<8; i++) createFloatingGua();
+        setInterval(createFloatingGua, 3000);
+ 
+        // 按钮特效 
+        document.getElementById('donate-btn').addEventListener('click',  function(e) {
+            e.preventDefault(); 
+            this.style.background  = "linear-gradient(160deg, #ffcc00, #00aa77)";
+            
+            // 玫瑰特效 
+            for(let i=0; i<3; i++) {
+                setTimeout(() => {
+                    const rose = document.createElement("div"); 
+                    rose.className  = "rose";
+                    rose.innerHTML  = "🌹";
+                    rose.style.left  = `${Math.random()  * 60 + 20}%`;
+                    rose.style.top  = "60%";
+                    rose.style.animationDelay  = `${i * 0.2}s`;
+                    document.body.appendChild(rose); 
+                    setTimeout(() => rose.remove(),  1500);
+                }, i * 200);
+            }
+            
+            // 文字特效 
+            const textLeft = document.createElement("div"); 
+            textLeft.className  = "bless-text left";
+            textLeft.textContent  = "予人玫瑰，手有余香";
+            textLeft.style.top  = "40%";
+            document.body.appendChild(textLeft); 
+            
+            const textRight = document.createElement("div"); 
+            textRight.className  = "bless-text right";
+            textRight.textContent  = "禅心自在，移步随喜";
+            textRight.style.top  = "40%";
+            document.body.appendChild(textRight); 
+            
+            setTimeout(() => {
+                textLeft.remove(); 
+                textRight.remove(); 
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

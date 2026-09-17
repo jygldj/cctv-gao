@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color or gradient for TV banner (16:9). Replace as needed. -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFFFF"/>
+        </shape>
+    </item>
+
+    <!-- Centered app mark; using the new dxds launcher icon. -->
+    <item
+        android:gravity="center"
+        android:width="144dp"
+        android:height="144dp"
+        android:drawable="@mipmap/ic_launcher"/>
+</layer-list>
+
+

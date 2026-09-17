@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>感谢您的支持</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0; /* 文字主色 */
+            font-family: 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        /* 打赏码（移植自移步随喜.html 金边玻璃面板样式） */
+        .qrcode-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .qrcode-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #D4AF37;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .qrcode-img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .qrcode-title {
+            margin-top: 8px;
+            color: #D4AF37;
+            font-size: 0.95rem;
+            font-weight: normal;
+        }
+        
+        /* 遥控器焦点态：对齐 kuxuan/移步随喜 风格 */
+        .qrcode-img.tv-focus {
+            outline: 4px solid #D4AF37;
+            outline-offset: 3px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+        
+        .thank-you {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .qrcode-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .qrcode-title {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            /* 电视大屏幕优化 */
+            h1 {
+                font-size: 3rem;
+            }
+            
+            p {
+                font-size: 1.5rem;
+            }
+            
+            .qrcode-img {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .qrcode-title {
+                font-size: 1.5rem;
+            }
+            
+            .thank-you {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>感谢您的支持</h1>
+        <p>如果您喜欢我的内容，可以通过以下方式打赏支持。您的每一份心意都是我继续创作的动力！</p>
+        
+        <div class="qrcode-container">
+            <div class="qrcode-item">
+                <img src="wx.png"  alt="微信收款二维码" class="qrcode-img" tabindex="0">
+                <div class="qrcode-title">欢喜结缘·微信</div>
+            </div>
+            
+            <div class="qrcode-item">
+                <img src="zfb.png"  alt="支付宝收款二维码" class="qrcode-img" tabindex="0">
+                <div class="qrcode-title">随缘乐助·支付宝</div>
+            </div>
+        </div>
+        
+        <div class="thank-you">衷心感谢您的支持！</div>
+    </div>
+    
+    <script>
+        // ===== 遥控器支持 =====
+        (function(){
+            const KEY_UP=87, KEY_DOWN=83, KEY_LEFT=65, KEY_RIGHT=68, KEY_OK=13, KEY_BACK=8, KEY_BACK_IPANNEL=4, KEY_MENU=82;
+            const imgs = Array.prototype.slice.call(document.querySelectorAll('.qrcode-img'));
+            let focusIdx = 0;
+            // 初始聚焦第一张
+            if(imgs.length){ imgs[0].classList.add('tv-focus'); }
+
+            document.addEventListener('keydown', function(e){
+                const code = e.keyCode;
+                switch(code){
+                    case KEY_LEFT:
+                    case KEY_RIGHT:
+                        // 两码间左右移动焦点
+                        if(imgs.length > 1){
+                            imgs[focusIdx].classList.remove('tv-focus');
+                            focusIdx = (focusIdx + (code === KEY_RIGHT ? 1 : imgs.length - 1)) % imgs.length;
+                            imgs[focusIdx].classList.add('tv-focus');
+                        }
+                        e.preventDefault();
+                        break;
+                    case KEY_UP:
+                    case KEY_DOWN:
+                        if(imgs.length){ imgs[focusIdx].classList.add('tv-focus'); }
+                        e.preventDefault();
+                        break;
+                    case KEY_OK:
+                        if(imgs[focusIdx]){ e.preventDefault(); imgs[focusIdx].click(); }
+                        break;
+                    case KEY_BACK:
+                    case KEY_BACK_IPANNEL:
+                        e.preventDefault();
+                        window.location.href = '../kuxuan.html';
+                        break;
+                    case KEY_MENU:
+                        e.preventDefault();
+                        window.location.href = '../index.html';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

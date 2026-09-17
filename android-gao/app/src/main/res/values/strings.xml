@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">道玄电视高清版</string>
+    <string name="reload">重载</string>
+    <string name="hz">画质</string>
+    <string name="jd">进度</string>
+    <string name="rate">倍数</string>
+    <string name="next">下一集</string>
+    <string name="xj">选集</string>
+    <string name="zb">频道</string>
+    <string name="font">30sp</string>
+    <string name="kong"> </string>
+    <string name="updateOk">确认升级</string>
+    <string name="updateCancel">以后再说</string>
+    <string name="updateDesc">发现新版本 建议升级</string>
+    <string name="desc">道玄电视启动中</string>
+</resources>

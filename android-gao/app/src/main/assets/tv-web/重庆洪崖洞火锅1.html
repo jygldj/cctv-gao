@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重庆洪崖洞火锅：数字禅意版</title>
+    <style>
+        :root {
+            --text: #fff8f0;
+            --bg: #1a0f0b;
+            --accent1: #ff6600;
+            --accent2: #ffcc00;
+            --panel: rgba(255,204,0,0.1);
+        }
+        
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: var(--text);
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 18px;
+        }
+        
+        /* 太极容器 */
+        .taiji-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+        }
+        
+        /* 太极图 */
+        .taiji {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 90px;
+            left: 90px;
+            background: radial-gradient(circle at 50% 25%, #fff 25%, #000 25% 75%, #fff 75%);
+            border-radius: 50%;
+            animation: spin 8s infinite linear;
+            box-shadow: 0 0 25px var(--accent1);
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .taiji::before, .taiji::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .taiji::before {
+            top: 25%;
+            background: #000;
+            box-shadow: 0 0 10px #fff;
+        }
+        
+        .taiji::after {
+            bottom: 25%;
+            background: #fff;
+            box-shadow: 0 0 10px #000;
+        }
+        
+        /* 等距环绕文字 */
+        .arc-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            animation: spin-reverse 16s infinite linear;
+        }
+        
+        .arc-text span {
+            position: absolute;
+            display: block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--accent1);
+            text-shadow: 0 0 10px rgba(255,102,0,0.8);
+            /* 位置通过JS动态计算 */
+        }
+        
+        @keyframes spin-reverse {
+            100% { transform: rotate(-360deg); }
+        }
+        
+        /* 火锅悟道 */
+        .info-text {
+    max-width: 500px; /* 保持最大宽度不变 */
+    margin: 10px auto; /* 减小外边距，使整体更紧凑 */
+    padding: 0 10px; /* 减小内边距，进一步压缩空间 */
+    font-size: 0.9rem; /* 缩小字体大小 */
+    line-height: 1.4; /* 缩小行间距 */
+    position: relative;
+    z-index: 1;
+        }
+        
+        #donate-btn {
+            background: linear-gradient(160deg, var(--accent1), var(--accent2));
+            color: #222 !important;
+            border: none;
+            padding: 10px 20px /* 减少内边距 */
+            font-size: 1rem; /* 减小字体大小 */
+            border-radius: 50px;
+            margin: 30px auto;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        #donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,102,0,0.6);
+        }
+        
+        .cq-egg {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.9rem;
+            color: var(--accent1);
+            writing-mode: vertical-rl;
+        }
+        
+        /* 火锅特效 */
+        .hotpot-effect {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            background: radial-gradient(circle, transparent 60%, rgba(255,102,0,0.1) 100%);
+            animation: hotpot-bubble 8s infinite linear;
+        }
+        
+        @keyframes hotpot-bubble {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+        
+        .chili-pepper {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: float 15s infinite linear;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.1; }
+            50% { opacity: 0.9; }
+            100% { transform: translate(100vw, -100vh) rotate(360deg); opacity: 0.1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="taiji-container">
+        <div class="taiji"></div>
+        <div class="arc-text">
+            <span>来</span>
+            <span>者</span>
+            <span>有</span>
+            <span>心</span>
+            <span>去</span>
+            <span>者</span>
+            <span>有</span>
+            <span>意</span>
+        </div>
+    </div>     
+    <div class="info-text">
+        <p>火锅悟道</p>
+        <p>山城夜色映洪崖，辣海椒山蕴妙华。</p>
+        <p>来者有心皆是缘，去者有意禅自圆。</p>
+        <p>麻辣交融参世相，太极火锅品浮生。</p>
+    </div>
+    
+    <button id="donate-btn">再辣点儿哈！</button>
+    
+    <div class="cq-egg">勒是雾都道玄</div>
+    <div class="hotpot-effect"></div>
+    
+    <script>
+        // 等距定位计算（间距40px）
+        function positionCharacters() {
+            const taiji = document.querySelector('.taiji'); 
+            const chars = document.querySelectorAll('.arc-text  span');
+            const centerX = taiji.offsetLeft  + 60;
+            const centerY = taiji.offsetTop  + 60;
+            const margin = 40; // 黄金间距 
+            
+            // 145°紧凑分布 
+            const angles = [17.5, 35, 52.5, 70, 107.5, 125, 142.5, 160];
+            
+            chars.forEach((char,  i) => {
+                const angle = angles[i] * Math.PI / 180;
+                const x = centerX + (60 + margin) * Math.cos(angle)  - 15;
+                const y = centerY + (60 + margin) * Math.sin(angle)  - 15;
+                
+                char.style.left  = `${x}px`;
+                char.style.top  = `${y}px`;
+            });
+        }
+ 
+        // 创建辣椒 
+        function createChiliPepper() {
+            const chili = document.createElement("div"); 
+            chili.className  = "chili-pepper";
+            chili.innerHTML  = "🌶️";
+            chili.style.left  = `${Math.random()  * 100}vw`;
+            chili.style.top  = `${Math.random()  * 100}vh`;
+            chili.style.animationDuration  = `${Math.random()  * 15 + 5}s`;
+            document.body.appendChild(chili); 
+            
+            setTimeout(() => chili.remove(),  parseFloat(chili.style.animationDuration)  * 1000);
+        }
+ 
+        // 初始化 
+        positionCharacters();
+        window.addEventListener('resize',  positionCharacters);
+        
+        // 生成辣椒 
+        for(let i=0; i<5; i++) createChiliPepper();
+        setInterval(createChiliPepper, 3000);
+ 
+        // 按钮特效 
+        document.getElementById('donate-btn').addEventListener('click',  function(e) {
+            e.preventDefault(); 
+            this.style.background  = "linear-gradient(160deg, #ff7733, #ffdd00)";
+            
+            // 生成辣椒粒子 
+            for(let i=0; i<3; i++) {
+                setTimeout(createChiliPepper, i * 300);
+            }
+        });
+    </script>
+</body>
+</html>

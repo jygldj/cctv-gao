@@ -1,0 +1,23 @@
+*.apk
+*.iml
+.gradle
+# 密钥库文件（敏感信息）
+/keystore/
+*.jks
+*.keystore
+/app/release
+/app/debug
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/app/build/

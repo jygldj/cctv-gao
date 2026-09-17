@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="live"
+            type="com.daoxuan.cctv.domain.live.Live" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/liveWebViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#121212">
+        <LinearLayout
+            android:id="@+id/webviewWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#121212"
+            android:gravity="center"
+            android:focusable="true"
+            android:visibility="visible"
+            android:orientation="vertical">
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#121212"
+            android:focusable="true"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/notify"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:focusable="false"
+            android:visibility="visible"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/liveName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fontBig"
+                    android:textColor="@color/white"
+                     />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/menuContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="#80000000"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#80000000">
+
+                        <FrameLayout
+                            android:id="@+id/prevProvinceArea"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="@android:color/transparent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="16dp"
+                                android:gravity="center"
+                                android:text="←"
+                                android:textSize="20sp"
+                                android:textColor="#FFFFFF"/>
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/provinceName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="-50dp"
+                            android:layout_marginEnd="-50dp"
+                            android:gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:clickable="false"/>
+
+                        <FrameLayout
+                            android:id="@+id/nextProvinceArea"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="@android:color/transparent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="end"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center"
+                                android:text="→"
+                                android:textSize="20sp"
+                                android:textColor="#FFFFFF"/>
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/channelList"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:divider="#33FFFFFF"
+                    android:dividerHeight="1dp"
+                    android:listSelector="@drawable/menu_button_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:descendantFocusability="afterDescendants"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/loadingOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:gravity="center"
+            android:focusable="false"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/pulseContainer"
+                android:layout_width="112dp"
+                android:layout_height="112dp">
+
+                <View
+                    android:id="@+id/pulseRing1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:background="@drawable/pulse_ring" />
+
+                <View
+                    android:id="@+id/pulseRing2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:background="@drawable/pulse_ring" />
+
+                <View
+                    android:id="@+id/pulseRing3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:background="@drawable/pulse_ring" />
+
+                <View
+                    android:id="@+id/pulseCore"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/pulse_core" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                android:text="正在脱壳网页框架…"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/exitDialog"
+            layout="@layout/dialog_exit" />
+    </FrameLayout>
+</layout>

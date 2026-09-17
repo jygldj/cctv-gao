@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.daoxuan.cctv.domain.DetailMenu"/>
+        <variable
+            name="menu"
+            type="com.daoxuan.cctv.domain.DetailMenu"/>
+        <import type="android.view.View" />
+        <variable
+            name="menuTitleHandler"
+            type="com.daoxuan.cctv.BaseWebViewActivity.MenuTitleHandler" />
+    </data>
+    <FrameLayout
+        android:id="@+id/webViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#121212">
+        <LinearLayout
+            android:id="@+id/webviewWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#121212"
+            android:gravity="center"
+            android:focusable="false"
+            android:visibility="visible"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#121212"
+            android:focusable="false"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/tvMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:visibility="gone">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                
+                <LinearLayout
+                    android:id="@+id/tvMenuTitle"
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            style="?android:attr/button"
+                            android:id="@+id/xjBtn"
+                            android:tag="menu_xj"
+                            android:textSize="@dimen/fontDefault"
+                            android:textColor="#FFFFFF"
+                            android:text="@{menu.video?@string/xj:@string/zb}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/menu_button_background"
+                            android:focusable="true"
+                            android:padding="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:visibility="@{(menu.video&amp;&amp;menu.xjs.size>0&amp;&amp;(menu.now.xj.index+1)&lt;menu.xjs.size)?View.VISIBLE:View.GONE}"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/nextBtn"
+                            android:tag="menu_next"
+                            android:text="@string/next"
+                            android:onClick="@{()->menuTitleHandler.nextBtn()}"
+                            android:textSize="@dimen/fontDefault"
+                            android:textColor="#FFFFFF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/menu_button_background"
+                            android:focusable="true"
+                            android:padding="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:visibility="@{(menu.video&amp;&amp;menu.jds.size>0)?View.VISIBLE:View.GONE}"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/jdBtn"
+                            android:tag="menu_jd"
+                            android:text="@string/jd"
+                            android:textSize="@dimen/fontDefault"
+                            android:textColor="#FFFFFF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/menu_button_background"
+                            android:focusable="true"
+                            android:padding="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="@{(menu.hzs.size>0)?View.VISIBLE:View.GONE}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            style="?android:attr/button"
+                            android:id="@+id/hzBtn"
+                            android:textSize="@dimen/fontDefault"
+                            android:textColor="#FFFFFF"
+                            android:tag="menu_hz"
+                            android:text="@{menu.now.hz.name}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:visibility="visible"
+                            android:background="@drawable/menu_button_background"
+                            android:padding="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:visibility="@{menu.rates.size>0?View.VISIBLE:View.GONE}"
+                        android:layout_height="wrap_content">
+                        <Button
+                            style="?android:attr/button"
+                            android:id="@+id/rateBtn"
+                            android:tag="menu_rate"
+                            android:textSize="@dimen/fontDefault"
+                            android:textColor="#FFFFFF"
+                            android:text="@{@string/rate+menu.now.rate.name}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/menu_button_background"
+                            android:focusable="true"
+                            android:padding="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/reloadBtn"
+                            android:tag="menu_reload"
+                            android:text="@string/reload"
+                            android:onClick="@{()->menuTitleHandler.reloadBtn()}"
+                            android:textSize="@dimen/fontDefault"
+                            android:textColor="#FFFFFF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/menu_button_background"
+                            android:focusable="true"
+                            android:padding="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="2dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/jds_view"
+                        android:visibility="@{menu.tab.equals(`jd`)?View.VISIBLE:View.GONE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:saveEnabled="false"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hzs_view"
+                        android:visibility="@{menu.tab.equals(`hz`)?View.VISIBLE:View.GONE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:saveEnabled="false"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/xjs_view"
+                        android:visibility="@{menu.tab.equals(`xj`)?View.VISIBLE:View.GONE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:saveEnabled="false"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rates_view"
+                        android:visibility="@{menu.tab.equals(`rate`)?View.VISIBLE:View.GONE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:saveEnabled="false"/>
+                </FrameLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/loadingOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:gravity="center"
+            android:focusable="false"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:id="@+id/pulseContainer"
+                android:layout_width="112dp"
+                android:layout_height="112dp">
+
+                <View
+                    android:id="@+id/pulseRing1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:background="@drawable/pulse_ring" />
+
+                <View
+                    android:id="@+id/pulseRing2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:background="@drawable/pulse_ring" />
+
+                <View
+                    android:id="@+id/pulseRing3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:background="@drawable/pulse_ring" />
+
+                <View
+                    android:id="@+id/pulseCore"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/pulse_core" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                android:text="正在脱壳网页框架…"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/exitDialog"
+            layout="@layout/dialog_exit_main" />
+
+    </FrameLayout>
+</layout>

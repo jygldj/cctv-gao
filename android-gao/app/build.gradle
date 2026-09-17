@@ -1,0 +1,116 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+ext{
+    rxhttp_version = "3.2.6"
+    okhttp_version = "3.12.13"
+    room_version = "2.6.1"
+}
+// 从 local.properties 读取签名配置
+def keystorePropertiesFile = rootProject.file("local.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+   /* flavorDimensions= ["env"]
+    productFlavors {
+        dev {
+            buildConfigField('String', 'BUILD_ENV_TYPE', '"dev"')
+        }
+        pro  {
+            buildConfigField('String', 'BUILD_ENV_TYPE', '"pro"')
+        }
+    }*/
+    namespace 'com.daoxuan.cctv'
+    compileSdk 34
+
+    // 签名配置（从 local.properties 读取）
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['RELEASE_STORE_FILE'] ?: "../../cctv-app/zsby-release.jks")
+            storePassword keystoreProperties['RELEASE_STORE_PASSWORD'] ?: "dxds123456"
+            keyAlias keystoreProperties['RELEASE_KEY_ALIAS'] ?: "dxds"
+            keyPassword keystoreProperties['RELEASE_KEY_PASSWORD'] ?: "dxds123456"
+        }
+    }
+    buildFeatures {
+        buildConfig = true
+        dataBinding = true
+        viewBinding = true
+    }
+    defaultConfig {
+        applicationId "com.daoxuan.cctv.web"
+        // 系统 WebView 的 shouldInterceptRequest(WebView, WebResourceRequest) 需要 API 21
+        minSdk 21
+        //noinspection ExpiredTargetSdkVersiotv
+        targetSdk 28
+        versionCode 48
+        versionName "2025-11-02"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi","armeabi-v7a","arm64-v8a","x86"//"armeabi-v7a","x86" arm64-v8a ""armeabi-v7a"// arm64-v8a、armeabi-v7a、x86_64、x86 中的一个或多个
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+                /*
+                Room 具有以下注释处理器选项：
+                room.schemaLocation：配置并启用将数据库架构导出到给定目录中的 JSON 文件的功能。
+                                    [创建好表和数据库后编译，会在 app/schemas 目录下生成这个 JSON 文件]
+                room.incremental：启用 Gradle 增量注释处理器。
+                room.expandProjection：配置 Room 以重写查询，使其顶部星形投影在展开后仅包含 DAO 方法返回类型中定义的列。
+                */
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField('String', 'BUILD_ENV_TYPE', '"dev"')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            buildConfigField('String', 'BUILD_ENV_TYPE', '"pro"')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                // 此处指定生成的apk文件名
+                outputFileName = "dxds-gao.apk"
+            }
+    }
+    lint {
+        // 仅为打包放行该规则；如不上架 Play 可保留 targetSdk 28
+        checkReleaseBuilds false
+        abortOnError false
+        disable 'ExpiredTargetSdkVersion'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation 'com.qiniu:happy-dns:2.0.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    testImplementation libs.junit
+}

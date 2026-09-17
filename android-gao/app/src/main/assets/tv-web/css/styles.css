@@ -1,0 +1,168 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    font-family: Arial, sans-serif;
+    color: #e0e0e0;
+}
+ 
+/* ===== 主布局 ===== */
+.tv-body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #121212;
+}
+ 
+.tv-index {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    top: 0;
+    left: 0;
+}
+ 
+/* ===== 图标容器优化 ===== */
+.tv-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0.8vh 0.5vw;  /* 紧凑间距 */
+    padding: 0.5vh;
+    position: relative;  /* 为文字背景定位 */
+}
+ 
+/* ===== 内容区域 ===== */
+.tv-content {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    padding: 1vh 0;
+    gap: 0.3vh;  /* 压缩网格间隙 */
+}
+ 
+.tv-item img {
+    width: 16vw;        /* 缩小图标尺寸 */
+    height: 16vw;       /* 保持正方形 */
+    object-fit: contain;
+    margin-bottom: 0.5vh;  /* 减少图文间距 */
+    border-radius: 0.6vw;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);  /* 增加层次感 */
+}
+ 
+.tv-item span {
+    font-size: 3vh;    /* 小于导航文字 */
+    color: #D4AF37 !important;  /* 金色文字 */
+    text-align: center;
+    margin-top: 0.3vh;
+    padding: 0.3vh 0.6vw;
+    background: rgba(30, 30, 30, 0.7);  /* 暗灰标签底 */
+    border-radius: 0.4vw;
+    width: 90%;  /* 限制背景宽度 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+ 
+/* ===== 焦点状态 ===== */
+.tv-focus,
+.tv-item:focus {
+    outline: 2px solid #D4AF37 !important;
+    outline-offset: 1px;
+    transform: scale(1.03);
+    background: transparent !important;
+}
+ 
+.tv-focus img,
+.tv-item:focus img {
+    transform: scale(1.05);
+    filter: brightness(1.1);  /* 聚焦时轻微提亮 */
+}
+ 
+.tv-focus span,
+.tv-item:focus span {
+    background: rgba(30, 30, 30, 0.9);  /* 聚焦时背景加深 */
+}
+ 
+/* ===== 按钮样式 ===== */
+.tv-btn {
+    font-size: 4vh;
+    margin: 1vw;
+    padding: 0.5vh 1.5vw;
+    line-height: 5vh;
+    border-radius: 1.5vw;
+    text-align: center;
+    background-color: transparent !important;
+    transition: all 0.2s ease;
+}
+ 
+/* ===== 响应式设计 ===== */
+@media (max-width: 768px) {
+    .tv-content {
+        grid-template-columns: repeat(3, 33.3%);
+    }
+    
+    .tv-item img {
+        width: 16vw;
+        height: 16vw;
+    }
+    
+    .tv-item {
+        margin: 1.2vh 0.8vw;
+    }
+    
+    .tv-btn {
+        font-size: 3.5vh;
+        margin: 0.8vw;
+    }
+}
+ 
+/* ===== 保留原有必要样式 ===== */
+.tv-notify {
+    width: 100%;
+    background-color: #D4AF37;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    animation: fadeInDown 0.5s forwards;
+    height: 10vh;
+    padding: 2vh 0;
+    font-size: 6vh;
+    color: #e0e0e0;
+    z-index: 1000;
+}
+ 
+.tv-text {
+    text-align: center;
+    font-size: 4vh;
+}
+ 
+.tv-wait {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(18, 18, 18, 0.9);
+    text-align: center;
+    font-size: 8vh;
+    line-height: 100vh;
+    z-index: 999;
+}
+ 
+/* 动画效果 */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

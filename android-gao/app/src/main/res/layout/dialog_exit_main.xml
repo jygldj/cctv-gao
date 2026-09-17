@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/exitDialogContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="afterDescendants">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <LinearLayout
+            android:id="@+id/exitDialogContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#E6000000"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="afterDescendants">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <Button
+                android:id="@+id/btnStartToggle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="启动电视直播"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:background="@drawable/menu_button_background"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true"
+                android:layout_marginBottom="16dp"
+                android:nextFocusDown="@id/btnClearCache" />
+
+
+
+
+
+            <Button
+                android:id="@+id/btnClearCache"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="点击清理缓存"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:background="@drawable/menu_button_background"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:nextFocusUp="@id/btnStartToggle"
+                android:nextFocusDown="@id/btnExitApp" />
+
+            <Button
+                android:id="@+id/btnExitApp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="退出应用"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:background="@drawable/menu_button_background"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:nextFocusUp="@id/btnClearCache"
+                android:nextFocusDown="@id/btnCancel" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="取消"
+                android:textColor="#CCCCCC"
+                android:textSize="18sp"
+                android:background="@drawable/menu_button_background"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:defaultFocusHighlightEnabled="true"
+                android:clickable="true"
+                android:nextFocusUp="@id/btnExitApp" />
+
+            <TextView
+                android:id="@+id/tvExitHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="按返回键退出应用"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tvZsbyLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="《增删卜易•六爻占卜系统》\nhttps://dxzsby.pages.dev"
+                android:textColor="#4FA3FF"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:autoLink="web"
+                android:linksClickable="true" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+
+
